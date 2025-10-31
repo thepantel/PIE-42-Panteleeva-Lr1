@@ -6,6 +6,9 @@ public class Main {
         private double x1;
         private double x2;
         
+        public Interval() {
+        }
+        
         public void init(double x1, double x2) {
             this.x1 = x1;
             this.x2 = x2;
@@ -50,7 +53,9 @@ public class Main {
         public static Interval add(Interval a, Interval b) {
             double newX1 = Math.min(a.x1, b.x1);
             double newX2 = Math.max(a.x2, b.x2);
-            return new Interval(newX1, newX2);
+            Interval result = new Interval();  
+            result.init(newX1, newX2);        
+            return result;
         }
         
         public double getX1() {
@@ -114,12 +119,14 @@ public class Main {
         System.out.printf(" (длина: %.2f)\n", interval1.length());
         
         System.out.println("\n--- Дополнительный пример ---");
-        Interval interval3 = new Interval(2.5, 7.8);
-        System.out.print("Интервал 3 (создан через конструктор): ");
+        Interval interval3 = new Interval();
+        interval3.init(2.5, 7.8);  
+        System.out.print("Интервал 3 (создан через init): ");
         interval3.display();
         System.out.printf(" (длина: %.2f)\n", interval3.length());
         
-        Interval totalInterval = Interval.add(Interval.add(interval1, interval2), interval3);
+        Interval tempInterval = Interval.add(interval1, interval2);
+        Interval totalInterval = Interval.add(tempInterval, interval3);
         System.out.print("\nСумма всех трех интервалов: ");
         totalInterval.display();
         System.out.printf(" (длина: %.2f)\n", totalInterval.length());
